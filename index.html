@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>雨雲レーダー</title>
+
+  <link rel="stylesheet" href="//unpkg.com/leaflet@1.3.0/dist/leaflet.css" />
+  <script src="//unpkg.com/leaflet@1.3.0/dist/leaflet.js"></script>
+
+  <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+
+  <link rel="stylesheet" href="./css/index.css" type="text/css">
+  <link rel="stylesheet" href="./css/hamburger.css" type="text/css">
+  <link rel="stylesheet" href="./css/smart.css" type="text/css">
+
+  <link rel="stylesheet" href="./css/leaf-org.css" type="text/css">
+  <link rel="stylesheet" href="./css/amayukI.css" type="text/css">
+<!--  <link rel="stylesheet" href="./css/UryoSuii/usuiLabel.css" type="text/css"> -->
+
+  <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyAJJGyhKhHmeW2X0rSQR7Au83cd8eB_w04" async defer></script>
+  <script src='//unpkg.com/leaflet.gridlayer.googlemutant@latest/Leaflet.GoogleMutant.js'></script>
+
+  <script src="./bundle.js"></script>
+  <script src="./main.js" charset="utf-8"></script>
+<!--
+  <script src="https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.Default.css" />
+-->
+</head>
+
+<body>
+<!-- Header Cloud Radar -->
+
+  <div id="Header" style="margin-right:0%; margin-top:0px; text-align:center">
+<!--
+  <div id="Header" style="margin-right:0%; height:80px; margin-top:0px; text-align:center"> -->
+<!-- <span id="reloadCountDown"></span> -->
+    <nav>
+  <a id="layerChange" style="position:absolute; top:0%; /* height;30px; */ width:300px;
+         background: #FFF; border:solid 6px brown; left:0px; color:black">
+  地図画面左上にあるボタンでgooglemap等に切替が出来ます
+  </a>
+
+  <div class="header-logo-menu" style="position:absolute;top:1%;right:2%;width:100px">
+    <div id="nav-drawer">
+
+<!-- 2020 01 10 -->
+      <input id="nav-input" type="checkbox" class="nav-unshown">
+        <label id="nav-open" for="nav-input">
+<!--
+      <label id="nav-open" for="nav-input" onclick="underScrool()">
+-->
+                                                               <!-- scrool -->
+<!--        <a class="btn-flat-border" style="font-size:18px ">ここをクリックして<br>雨水・雨雲の表示設定</a> -->
+          ここをクリックして<br>雨水・雨雲の表示設定
+          <span style="right:10px;top:0px;"></span>
+        </label>
+      <label class="nav-unshown" id="nav-close" for="nav-input"></label>
+<!--      <label class="nav-unshown" id="nav-close" for="nav-input" onclick="underScroolDown()"></label> -->
+      <div id="nav-content" style="z-index: 999999;">
+
+<!-- onoff button -->
+
+<!-- amagumo usui hyouji -->
+      <a id="hanbaegerMenu">MENU</a><br>
+      <form class="form1" name="form1" id="formHanAU" style="">
+
+        <a id="Koumoku" style="color:black"> &nbsp; 表示 ON/OFF 切り替え<br> </a>
+
+        <label>
+          <a id="amaGumo" style="">
+<!--            <input type="checkbox" class="ch0" onclick="func();" name="hyoujiCheck" checked /> -->
+<!--            <input type="checkbox" class="ch0" onclick="func();" checked /> -->
+            <input type="checkbox" class="ch0" onclick="func();" name="amgm" checked />
+            雨雲表示
+          </a>
+        </label>
+        <label>
+          <a id="ikkatsu" style="color:#000">
+            <input type="checkbox" name="all" onClick="AllChecked();" >
+ <!-- checked /> -->
+              雨水一括表示 <!-- 雨水表示/非表示 -->
+          </a><a style="position:abusolute;"></a>
+        </label><br>
+        <label>
+          <a id="Label" style="color:#000">
+            <input type="checkbox" name="all2" onClick="usui_label_check()" />
+              ラベル表示
+          </a><a style="position:abusolute;"></a>
+        </label><br>
+
+<!--        <div id="UryoSuiiIcon" style="background:#000; height:auto">-->
+<!--        <details><summary id="DetailSumma">雨量・水位アイコン</summary>-->
+<!--          <label style="width:85%; border-style:solid; border-color:gray;"> -->
+
+<!-- 雨量 -->
+          <label>
+            <a id="uryoSui">
+              <input type="checkbox" class="ch1" onclick="funcU(); DisChecked();" name="hyoujiCheck" value="TEST2" checked />
+              雨量のみ <!-- <br> ON/OFF --> <br>
+            </a>
+          </label>
+          <p id="test2">
+            <input id="Ur1" type="radio" name="q1" value="v_rain" onclick="V_rain()" checked="checked">
+              <label class="label"> 5分 &nbsp;</label>
+            <input id="Ur2" type="radio" name="q1" value="x_rain" onclick="X_rain()">
+              <label class="label"> 10分 </label> <!-- <br><br> -->
+            <input id="Ur3" type="radio" name="q1" value="s_rain" onclick="S_rain()">
+              <label class="label"> 60分 </label>
+            <input id="Ur4" type="radio" name="q1" value="r_rain" onclick="R_rain()">
+              <label class="label"> 累加 </label>
+          </p> <!-- test2 -->
+<!--
+            </a>
+          </label>
+-->
+
+<!-- kuni -->
+          <label>
+            <a id="hamKuniUryo" style="color:#000">
+              <input type="checkbox" class="ch1" onclick="funcK_U(); DisChecked();" name="hyoujiCheck" value="KuniUryo" />
+              国の雨量のみ <!-- <br> ON/OFF --> <br>
+            </a> <!-- hamSuii -->
+          </label>
+
+<!-- 水位 -->
+          <label>
+
+            <a id="hamSuii">
+              <input type="checkbox" class="ch1" onclick="funcS(); DisChecked();" name="hyoujiCheck" value="TEST3" checked />
+              水位のみ <!-- <br> ON/OFF --> <br>
+            </a> <!-- hamSuii -->
+          </label>
+          </p>
+
+<!-- kuni -->
+          <label>
+            <a id="hamKuniSuii" style="color:#000">
+              <input type="checkbox" class="ch1" onclick="funcK_S(); DisChecked();" name="hyoujiCheck" value="KuniSuii" />
+<!--              <input type="checkbox" class="ch1" onclick="funcS(); DisChecked();" name="hyoujiCheck" value="KuniSuii" /> -->
+              国の水位のみ <!-- <br> ON/OFF --> <br>
+            </a> <!-- hamSuii -->
+          </label>
+
+<!-- ------------ -->
+
+<!--        </details> -->
+<!--        </div> --><!-- UryoSuiiIcon -->
+      </form>
+
+<!-- touka -->
+
+      <div id="test1" style="background-color:#FFF;">
+        <p>
+          <input type="range" id="tParentId" class="t_parent" value="0.8" max="1" min="0" step="0.01"
+            style="width:90%">
+        </p>
+        <a style="position:absolute;left:0px;color:#000"> 雨雲の透明度</a>
+        <a id="valueId" class="value" style="position:relative; right:0% ;color:#000;">0.8</a>
+        <a>　</a> <br>
+      </div>
+    <br>
+
+    <a id="menu-over" style="">
+      MENU外の画面をクリックすればMENUを閉じることが出来ます
+    </a>
+
+
+    <form id="target" style="text-align:left">雨雪表示 <a id="smart_Dan"></a>
+<!--
+        <a class="amykValue" id="Amyk_value" style="position:relative; right:0% ;color:#000;">0.8</a>
+-->
+        <input name="amyk" type="radio" value="無" onclick="clickAmayuki()" checked="checked"> 非表示
+	<input name="amyk" type="radio" value="0" onclick="clickAmayuki()"> 現在時刻 <br>
+	<input name="amyk" type="radio" value="1" onclick="clickAmayuki()"> 1時間後
+	<input name="amyk" type="radio" value="2" onclick="clickAmayuki()"> 2時間後 <br>
+        <input name="amyk" type="radio" value="3" onclick="clickAmayuki()"> 3時間後
+        <input name="amyk" type="radio" value="4" onclick="clickAmayuki()"> 4時間後 <br>
+        <input name="amyk" type="radio" value="5" onclick="clickAmayuki()"> 5時間後
+        <input name="amyk" type="radio" value="6" onclick="clickAmayuki()"> 6時間後
+<!--        <input name="amyk" type="radio" value="無" onclick="clickAmayuki()" checked="checked"> 非表示 -->
+<!--        <a> -->
+          <input id="targetRange" type="range" id="amayukiRange" class="amykRange" value="0.8" max="1" min="0" step="0.01">
+
+        <br>
+          <a id="amykToumeiDo">雨雪の透明度</a>
+          <a id="amagumoTouka_value" > 0.8 </a>
+
+<!--
+          <a class="amykValue" id="Amyk_value" style="position:relative; right:0% ;color:#000;">0.8</a>
+-->
+<!--        </a> -->
+    </form>
+<!--    <p id="usuiReload"　style="bottom: 20%">雨水アイコン更新まで<br> </p> -->
+    <div id="relCounter">
+      <p id="usuiReload" >雨水アイコン更新まで </p>
+      <span id="reloadCountDown" ></span><br>
+      <p style="position:absolute; top:1500px">&nbsp;<br></p>
+    </div>
+<!--
+    <p style="position:fixed; right:10px; /* bottom:900px; z-index:10; */ color:#000">
+-->
+
+    </div><br>
+  </div>
+
+<!--  <div class="logo-erea"></div> -->
+<!-- menu ここまで -->
+
+  </div>
+      <span aria-hidden="true">
+        <div class="my-parts" style="color:white">
+          <span>
+            <a id="c_radar" style="position:absolute;top:1.5%;font-size:38px;left:35%;right:35%;">
+              雨雲レーダー
+            </a>
+<!-- 2020 04 22 メール検索 
+<a href="./Received_form.php"> PHP </a>
+-->
+          </span>
+        </div>
+      </span>
+    </nav>
+  </div>
+
+<!-- color bar precipitation -->
+
+  <div id="kousui" style="">
+<!--
+  <div id="kousui" style="position:absolute; margin-left:0%;">
+-->
+    <a id="ColorNumber" style="left: -0.5%; top:5%"> 降水量 </a>
+
+    <div class="prec" style="background-color:#CCFFFF"><a id="ColorNumber">0</a></div>
+    <div class="prec" style="background-color:#66FFFF"><a id="ColorNumber">1</a></div>
+    <div class="prec" style="background-color:#33CCFF"><a id="ColorNumber">2</a></div>
+    <div class="prec" style="background-color:#0099FF"><a id="ColorNumber">4</a></div>
+    <div class="prec" style="background-color:#0033FF"><a id="ColorNumber">8</a></div>
+    <div class="prec" style="background-color:#00FF00"><a id="ColorNumber">12</a></div>
+    <div class="prec" style="background-color:#00BB00"><a id="ColorNumber">16</a></div>
+
+    <div class="prec" style="background-color:#008800"><a id="ColorNumber">24</a></div>
+    <div class="prec" style="background-color:#FFFF22"><a id="ColorNumber">32</a></div>
+    <div class="prec" style="background-color:#FFCC66"><a id="ColorNumber">40</a></div>
+    <div class="prec" style="background-color:#FF9900"><a id="ColorNumber">48</a></div>
+
+    <div class="prec" style="background-color:#FF3300"><a id="ColorNumber">56</a></div>
+    <div class="prec" style="background-color:#FF0000"><a id="ColorNumber">64</a></div>
+    <div class="prec" style="background-color:#990000"><a id="ColorNumber">80</a></div>
+    <a id="mmh" style="margin-right:0%; top:5%"> (mm/h)</a>
+  </div>
+
+  <div id="sekisetsu">
+<!--  <div id="kousui" style=""> -->
+    <div class="Sekisetsu" style="background-color:#008000"><a id="Y_status">湿った強い雪</a></div>
+    <div class="Sekisetsu" style="background-color:#00FF00"><a id="Y_status">湿った弱い雪</a></div>
+    <div class="Sekisetsu" style="background-color:#FF99FF"><a id="Y_status">乾いた強い雪</a></div>
+    <div class="Sekisetsu" style="background-color:#FF00FF"><a id="Y_status">乾いた弱い雪</a></div>
+    <div class="Sekisetsu" style="background-color:#800080"><a id="Y_status">みぞれ</a></div>
+    <div class="Sekisetsu" style="background-color:#0000FF"><a id="Y_status">強い雨</a></div>
+    <div class="Sekisetsu" style="background-color:#00FFFF"><a id="Y_status">弱い雨</a></div>
+  </div>
+
+<!-- Map Leaflet -->
+  <div id="mapjq" style="position:absolute;top:15%;left:0;right:0;bottom:0; z-index:0"><!-- radio form -->
+  </div>
+
+<!-- time YY:HH -->
+    <div id="time" class="time_c" style="border-style: solid; border-color:gray;z-index:0.1; opacity:1">
+      <nav style="position: relative; top:25%;">
+<!--        <a>&#x1F552;</a> -->
+        <a id="current" style=""></a>
+        <output id="output1"></output>
+      </nav>
+    </div>
+
+
+<!-- scrool -->
+<!--    <p id="scrool">
+      <img id="UnderScrool" src="jpg/shita.jpg">
+-->
+    </p>
+<!-- Amagumo Yosoku Bar -->
+
+  <div id="Footer">
+    <nav>
+        <font size="5">
+          <div style="position:absolute; margin-top:0.5%; left:1%; width=2%">
+            <p id="y_start"></p>
+            <a id="animeStart" href="javascript:void(0)" onclick="rainAnime()"
+              style="position:absolute; top:10px; left:-1%; font-size:36px">
+            &#9658;
+            </a>
+          </div>
+        </font>
+
+  <!-- Amagumo Footer Number -->
+      <input
+        id="Bar" class="slider" type="range" value="0"
+        min="-12" max="17" step="1" solid="4px"
+        list="tlist" style="position:absolute; margin-top:1.5%; width=0%; pointer-events: auto"
+        oninput="document.getElementById('output1').value=this.value">
+
+      <datalist id="tlist">
+        <option value="-12"></option>
+        <option value="0"></option>
+        <option value="12"></option>
+        <option value="13"></option>
+        <option value="14"></option>
+        <option value="15"></option>
+        <option value="16"></option>
+        <option value="17"></option>
+      </datalist>
+
+
+  <!-- ---- ---- footer Number ---- ---- -->
+      <div class="math" id="math2">
+        <p style="position:absolute; top:52px; margin-left:0.0%">-1 (1時間前)</p>
+        <p style="position:absolute; top:52px; margin-left:40%">0 (現在時刻)</p>
+        <p style="position:absolute; top:52px; right:17%">1</p>
+        <p style="position:absolute; top:52px; right:13.6%">2</p>
+        <p style="position:absolute; top:52px; right:10.2%">3</p>
+        <p style="position:absolute; top:52px; right:6.8%">4</p>
+        <p style="position:absolute; top:52px; right:3.4%">5</p>
+        <p style="position:absolute; top:52px; right:0.00%">6</p>
+      </div>
+      <button id="zeroBar" style="pointer-events:none;" onclick="rainReset()">
+        現在時刻に戻す
+
+      </button>
+      <a id="Amagumo_UryoSuii_Icon"> 雨量水位は常に実況値です </a>
+
+      <output id="output2" style="color: white;"></output>
+    </nav>
+  </div>
+
+<!-- ---- ---- GPS ---- ---- -->
+
+  <a id="circle" style="color: #6699FF;" class="cc3">
+    <div id="contents">
+      <a href="javascript:void(0);" id="start_gps" onclick="click_gps_start()">
+        <img id="gps" src="jpg/GPS.jpg">
+<!--          src="https://www.silhouette-illust.com/wp-content/uploads/2017/08/location_genzaichi_35719-300x300.jpg"> -->
+      </a>
+    </div>
+  </a>
+
+<!-- ---- ---- 過去31日間の天気を表示 ---- ---- -->
+  <a href="./specified2.html" id="circle" class="cc2">
+    <font size="3" id="spe_font" color="green" > 過去の </font>
+    <font size="3" id="spe_font2" color="green" > 天気 </font>
+  </a>
+
+  <script type="text/javascript" src="js/leafletMap.js"></script> <!-- 地図表示 -->
+
+  <script type="text/javascript" src="js/UryoSuii/rainIcon.js"></script> <!--5 10 60 累加-->
+  <script type="text/javascript" src="js/UryoSuii/icon.js"></script>
+
+  <script type="text/javascript" src="js/smart.js"></script>
+
+  <script type="text/javascript" src="js/Prec/ajaxPrec.js"></script>
+  <script type="text/javascript" src="js/Prec/timePrec.js"></script>
+  <script type="text/javascript" src="js/Prec/rangePrec.js"></script>
+  <script type="text/javascript" src="js/prec.js"></script>  <!-- 雨雲表示 -->
+
+<!--  <script type="text/javascript" src="js/UryoSuii/hyouji.js"></script> 雨量水位を表示する-->
+
+  <script type="text/javascript" src="js/UryoSuii/usui.js"></script> <!--水位表示-->
+  <script type="text/javascript" src="js/UryoSuii/kuniUsui.js"></script>
+  <script type="text/javascript" src="js/UryoSuii/suiiAjax.js"></script>
+
+  <script type="text/javascript" src="js/UryoSuii/uryo.js"></script> <!--雨量Ajax-->
+  <script type="text/javascript" src="js/UryoSuii/rainRadio.js"></script> <!-- 5 10 60 累加-->
+  <script type="text/javascript" src="js/UryoSuii/kuniRainRadio.js"></script>
+
+
+  <script type="text/javascript" src="js/UryoSuii/hyouji.js"></script>
+  <script type="text/javascript" src="js/UryoSuii/usuiLabel.js"></script>
+
+  <script type="text/javascript" src="js/amayuki/AmaYuki.js"></script>
+  <script type="text/javascript" src="js/amayuki/radioAmayuki.js"></script>
+
+  <script type="text/javascript" src="js/menu.js"></script>
+
+
+</body>
+
+</html>
